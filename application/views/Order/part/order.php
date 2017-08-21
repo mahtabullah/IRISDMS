@@ -274,8 +274,9 @@
 
                 $('#ajax_load').css("display", "none");
                 getOutlet();
+                getOrderPart();
                $("#outlet").select2('val', '');
-//               /$("#outlet").change();
+              $("#outlet").change();
             }
         });
     });

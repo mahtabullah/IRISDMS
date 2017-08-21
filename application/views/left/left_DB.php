@@ -23,9 +23,9 @@
             </li>
             <li> <a href="#"><i class="fa fa-paper-plane fa-fw"></i><span> Basic</span><i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    
+
                     <li><a href="<?php echo base_url(); ?>DB_house/Day_end"><i class="fa fa-paper-plane fa-fw"></i><span>Day End </span></a> </li>
-                   
+
                 </ul>
 
             </li>
@@ -50,8 +50,14 @@
                         <ul class="treeview-menu">
 
                             <li><a href="<?php echo base_url(); ?>order/index"><i class="fa fa-circle-o"></i> All Order</a></li>
-                             <li><a href="<?php echo base_url(); ?>order/create"><i class="fa fa-circle-o"></i> Order</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Challan</a></li>
+                            <li><a href="<?php echo base_url(); ?>order/create"><i class="fa fa-circle-o"></i> Order</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Challan <i class="fa fa-angle-left pull-right"></i></a>
+
+                                <ul class="treeview-menu">
+                                    <li><a href="<?php echo base_url(); ?>Challan/index"><i class="fa fa-circle-o"></i> Challan</a></li>
+                                    <li><a href="<?php echo base_url(); ?>Challan/Create_challan"><i class="fa fa-circle-o"></i> Create Challan</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li>
@@ -62,7 +68,7 @@
 
                         </ul>
                     </li>
-                    
+
 
                 </ul>
             </li>

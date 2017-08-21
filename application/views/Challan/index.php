@@ -16,7 +16,7 @@ $Systemdate = $this->session->userdata('System_date');
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-                Sales Order
+                All Challan
                 <i class="fa fa-angle-right"></i>
             </li>
 
@@ -36,10 +36,10 @@ $Systemdate = $this->session->userdata('System_date');
                 <div class="portlet-body form">   
                     <div class="row">
                         <div class="col-md-12">
-                            <div style="padding: 10px;">
+                            <div style="padding: 20px;">
 
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="control-label">Date Range</label>
                                             <div class="input-group date-picker input-daterange" >
@@ -51,10 +51,7 @@ $Systemdate = $this->session->userdata('System_date');
                                             </div>
                                         </div>
                                     </div>
-
-
-
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="control-label">PSR</label>
 
@@ -69,29 +66,10 @@ $Systemdate = $this->session->userdata('System_date');
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
-                                            <label class="control-label">Sub Route</label>
-                                            <select class="form-control select2" id="Sub_Route" onchange="">
-                                                <option></option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="control-label">Outlet</label>
-                                            <select class="form-control select2" id="outlet">
-                                                <option></option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="control-label">Order Status</label>
-                                            <select class="form-control select2" id="sales_status">
+                                            <label class="control-label">Challan Status</label>
+                                            <select class="form-control select2" id="Challan_status">
 
 
                                                 <option value="">ALL</option>
@@ -100,7 +78,7 @@ $Systemdate = $this->session->userdata('System_date');
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label class="control-label"></label>
+
                                             <button style="margin-top: 25px; margin-left: 25px;" class="btn btn-success" onclick="getData();">Search</button>
                                         </div>
                                     </div>
@@ -108,12 +86,11 @@ $Systemdate = $this->session->userdata('System_date');
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>           
+                    </div>           
+                </div>
             </div>
         </div>
     </div>
-
 </div>
 
 <div id="all_order_info">
@@ -137,7 +114,7 @@ $this->load->view('footer/footer');
             autoclose: true
 
         });
-        getData();
+        //  getData();
     });
 
     function getRouteBySrAndDateRange() {}

@@ -47,7 +47,7 @@
         $('[href="' + pathname + '"]').parent("li").addClass("active");
         $('[href="' + pathname + '"]').parent("li").parent("ul").parent("li").addClass("active");
         $('[href="' + pathname + '"]').parent("li").parent("ul").parent("li").parent("ul").parent("li").addClass("active");
-        
+        $('[href="' + pathname + '"]').parent("li").parent("ul").parent("li").parent("ul").parent("li").parent("ul").parent("li").addClass("active");
         var ReportName=$('[href="' + pathname + '"]').text();
                 
         

@@ -7,10 +7,14 @@
                 <h3 class="box-title">All Order</h3>
 
             </div><!-- /.box-header -->
+            <div style="padding: 10px;">
             <div class="box-body no-padding">
                  <table class="table table-striped table-bordered table-hover table-full-width" id="sample_3">
                     <thead>
                         <tr>
+                            <th>
+                                Action
+                            </th>
                             <th>
                                 SL No.
                             </th>
@@ -35,8 +39,9 @@
                             </th>
                             
                             <th>
-                                Action
+                                Status
                             </th>
+                           
                         </tr>
                     </thead>
                     <tbody>
@@ -44,6 +49,11 @@
                         $sl=1;
                         foreach ($Order as $orderline) { ?>
                             <tr>
+                                 <td>
+                                     <?php $orderline['id']; ?>
+                                     <a target="_blank" href="<?php echo base_url() ;?>order/OrderEditById/<?php echo $orderline['id']; ?>" class="btn btn-primary btn-xs">Edit</a>
+                                    
+                                </td>
                                 <td>
                                     <?php echo $sl;$sl++; ?>
                                 </td>
@@ -69,9 +79,22 @@
                                     
                                 </td>
                                  
-                                <td class="">
+                                <td >
+                                     <?php $status=$orderline['so_status']; 
+                                     if($status==1){//new Order?>
+                                         <span class="label label-danger">New</span>
+                                         <?php
+                                     }elseif($status==2){ //Challan Created And Transit ?>
+                                         <span class="label label-warning">New</span>
+                                         <?php
+                                     }if($status==3){//Challan Confirm And Delveried ?>
+                                         <span class="label label-success">New</span>
+                                         <?php
+                                     }
+                                     ?>
                                    
                                 </td>
+                                
 
                             </tr>
                         <?php } ?>
@@ -81,6 +104,7 @@
             </div><!-- /.box-body -->
             <div class="box-footer no-padding">
 
+            </div>
             </div>
         </div><!-- /. box -->
     </div><!-- /.col -->
