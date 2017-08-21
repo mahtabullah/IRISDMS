@@ -23,5 +23,15 @@ class Challan extends CI_Controller {
         $data["PSR"] = $this->Challans->getDbpSrList($db_id);
         $this->load->view("Challan/Create_challan", $data);
     }
+    
+    
+    function add_challan_part() {
+        $db_id = $this->session->userdata('db_id');
+        $psr_id=$this->input->post('PSR_id');
+        $order_date = date("Y-m-d", strtotime($this->input->post('Orderdate')));
+        $data['Order_date']=$this->Challans->getOrder_date($db_id,$psr_id,$order_date);
+        var_dump($data);
+       // $this->load->view("Challan/part/challan_part", $data);
+    }
 
 }
