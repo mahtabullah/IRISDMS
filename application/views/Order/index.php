@@ -153,7 +153,7 @@ $this->load->view('footer/footer');
         $.ajax({
             type: "POST",
             url: "<?php echo base_url(); ?>order/allorder/",
-            data: {date_frm: date_frm, date_to: date_to, PSR: PSR, Sub_Route: Sub_Route, sales_status: sales_status},
+            Orderdate {date_frm: date_frm, date_to: date_to, PSR: PSR, Sub_Route: Sub_Route, sales_status: sales_status},
             dataType: "html",
             success: function (data) {
                 $("#all_order_info").html(data);
