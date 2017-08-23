@@ -1,6 +1,47 @@
 <?php
 
-class Users extends CI_Model {
+class Users extends CI_Model {    
+    
+    public function getEmpInfoByUserId($id) {
+        $this->db->select('*');
+        $this->db->from('tbld_sales_employee');
+        $this->db->where('login_user_id', $id);
+        $query = $this->db->get()->result_array();
+        $emp_type = 'sales';
+        
+        if (count($query) == 0) {
+            $this->db->select('*');
+            $this->db->from('tbld_distribution_employee');
+            $this->db->where('login_user_id', $id);
+            $query = $this->db->get()->result_array();
+            $emp_type = 'distribution';            
+        }
+        $result = array('query' => $query, 'emp_type' => $emp_type);
+        return $result;
+    }
+
+     public function getNameInfobyDbId($db_id) {
+        $query = mysql_query("SELECT t1.*, t2.address_name FROM `tbld_distribution_house` as t1 Left Join `tbld_address` as t2 On t1.dbhouse_address_id=t2.id where t1.id=$db_id");
+        $result = mysql_fetch_array($query);
+        return $result;
+    }
+    
+      public function dbInfoByDbId($db_id){
+        $sql = "select * from tbld_distribution_house where id=$db_id";
+        $query = $this->db->query($sql)->result_array();
+
+        return $query;
+    }
+    
+      public function get_user_profile ($id){
+        $sql = "SELECT t1.user_id,t1.user_name,t3.user_role_name FROM tbld_user as t1
+                LEFT JOIN tbli_user_role_mapping as t2 on t1.id = t2.user_id
+                LEFT JOIN tbld_user_role as t3 on t2.user_role_id = t3.id WHERE t1.id = 1";
+        $query = $this->db->query($sql)->result_array();
+
+        return $query;
+    }
+    //////********///
 
     public function getAllUser() {
         $this->db->select('id,user_name');
@@ -13,42 +54,6 @@ class Users extends CI_Model {
         $this->db->select('user_name');
         $this->db->where('id', $id);
         return $this->db->get('tbld_user')->result_array();
-    }
-
-    public function getEmpInfoByUserId($id) {
-        $this->db->select('*');
-        $this->db->from('tbld_sales_employee');
-        $this->db->where('login_user_id', $id);
-        $query = $this->db->get()->result_array();
-        $emp_type = 'sales';
-        if (count($query) == 0) {
-            $this->db->select('*');
-            $this->db->from('tbld_distribution_employee');
-            $this->db->where('login_user_id', $id);
-            $query = $this->db->get()->result_array();
-
-
-//            $sql = "SELECT t1.*,t2.biz_zone_id FROM `tbld_distribution_employee` as t1
-//                    left join `tbli_distribution_house_biz_zone_mapping` as t2 on t1.distribution_house_id=t2.dbhouse_id
-//                    where t1.login_user_id=$id";
-//            $query = $this->db->query($sql)->result_array();
-
-            $emp_type = 'distribution';
-            if (count($query) == 0) {
-//                $this->db->select('*');
-//                $this->db->from('tbld_pri_production_employee');
-//                $this->db->where('login_user_id', $id);
-//                $query = $this->db->get()->result_array();
-//                $emp_type = 'production';
-                $sql = " select name as first_name, id from tbld_pri_production_employee where login_user_id = $id ";
-                $query = $this->db->query($sql)->result_array();
-                if (count($query) == 0) {
-                    echo "mara kaho!!";
-                }
-            }
-        }
-        $result = array('query' => $query, 'emp_type' => $emp_type);
-        return $result;
     }
 
     public function get_tbld_user_role(){
@@ -115,26 +120,7 @@ class Users extends CI_Model {
         $result = mysql_fetch_array($query);
         return $result;
     }
-
-    public function getNameInfobyDbId($db_id) {
-        $query = mysql_query("SELECT t1.*, t2.address_name FROM `tbld_distribution_house` as t1 Left Join `tbld_address` as t2 On t1.dbhouse_address_id=t2.id where t1.id=$db_id");
-        $result = mysql_fetch_array($query);
-        return $result;
-    }
-    
-    public function getDBHouseBySpokeId ($id){
-        $sql = "SELECT `spoke_id` FROM `tbli_hub_spoke_mapping` where hub_id=$id";
-        $query = $this->db->query($sql)->result_array();
-
-        return $query;
-    }
-
     public function get_user_role_by_id($id) {
-        // $this->db->select('*');
-        // $this->db->from('tbld_user_role');
-        // $this->db->where("id", $id);
-        // $query = $this->db->get()->result_array();
-        // return $query;
         $query = mysql_query("SELECT `user_role_name` FROM tbld_user_role WHERE `id` IN(SELECT `user_role_id` FROM tbli_user_role_mapping WHERE `user_id`='$id')");
         $result = mysql_fetch_array($query);
         return $result;
@@ -190,22 +176,14 @@ class Users extends CI_Model {
     }
 
     public function get_tbld_role_by_id($id) {
-        // $this->db->select('*');
-        // $this->db->from('tbld_user_role');
-        // $this->db->where("id", $id);
-        // $query = $this->db->get()->result_array();
-        // return $query;
+      
         $query = mysql_query("SELECT `id`,`user_role_name` FROM tbld_user_role WHERE `id` IN(SELECT `user_role_id` FROM tbli_user_role_mapping WHERE `user_id`='$id')");
         $result = mysql_fetch_array($query);
         return $result;
     }
 
     public function get_tbld_group_by_id($id) {
-        // $this->db->select('*');
-        // $this->db->from('tbld_user_group');
-        // $this->db->where("id", $id);
-        // $query = $this->db->get()->result_array();
-        // return $query;
+       
         $query = mysql_query("SELECT `id`,`user_group_name` FROM tbld_user_group WHERE `id` IN(SELECT `user_group_id` FROM tbld_user_group_mapping WHERE `user_id`='$id')");
         $result = mysql_fetch_array($query);
         return $result;
@@ -230,23 +208,4 @@ class Users extends CI_Model {
         $this->db->where('id', $id);
         $this->db->delete('tbld_user');
     }
-
-    public function get_user_profile ($id){
-        $sql = "SELECT t1.user_id,t1.user_name,t3.user_role_name FROM tbld_user as t1
-                LEFT JOIN tbli_user_role_mapping as t2 on t1.id = t2.user_id
-                LEFT JOIN tbld_user_role as t3 on t2.user_role_id = t3.id WHERE t1.id = 1";
-        $query = $this->db->query($sql)->result_array();
-
-        return $query;
-    }
-
-    public function dbInfoByDbId($db_id){
-        $sql = "select * from tbld_distribution_house where id=$db_id";
-        $query = $this->db->query($sql)->result_array();
-
-        return $query;
-    }
-
 }
-
-?>

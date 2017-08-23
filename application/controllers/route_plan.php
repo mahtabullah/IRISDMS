@@ -155,7 +155,7 @@ class Route_plan extends CI_Controller {
                     'planned_visit_date' => $date,
                     'delivery_date' => $Deliverydate
                 );
-                $insert_into_route_plan_detail = $this->Route_plans->insertData('tblt_route_plan_detail', $route_plan_details);
+                $insert_into_route_plan_detail = $this->Route_plans->insertData('tbld_route_plan_detail', $route_plan_details);
             }
             $i++;
             if ($i == 7) {
@@ -164,7 +164,7 @@ class Route_plan extends CI_Controller {
             $date = date('Y-m-d', date(strtotime("+1 day", strtotime($date))));
             $Deliverydate = date('Y-m-d', date(strtotime("+1 day", strtotime($Deliverydate))));
         }
-        redirect(site_url('route_plan'));
+        redirect(site_url('Route_plan'));
     }
 
 }

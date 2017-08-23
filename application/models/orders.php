@@ -25,7 +25,7 @@ class orders extends CI_Model {
 
     function getRoutebByPSR($psr_id, $SystemDate) {
 
-        $sql = 'SELECT t2.id,t2.db_channel_element_name as route,t2.db_channel_element_code FROM `tblt_route_plan_detail` As t1
+        $sql = 'SELECT t2.id,t2.db_channel_element_name as route,t2.db_channel_element_code FROM `tbld_route_plan_detail` As t1
 INNER join tbld_distribution_route as t2 on t1.route_id=t2.id
 where t1.dist_emp_id=' . $psr_id . ' AND t1.planned_visit_date="' . $SystemDate . '"';
         $query = $this->db->query($sql)->result_array();
@@ -321,7 +321,7 @@ where t1.dist_emp_id=' . $psr_id . ' AND t1.planned_visit_date="' . $SystemDate 
 
     function getRouteBySr($sr_id) {
         $data = date('Y-m-d');
-        $sql = "SELECT t1.route_id as id,t2.route_name as name FROM `tblt_route_plan_detail` as t1
+        $sql = "SELECT t1.route_id as id,t2.route_name as name FROM `tbld_route_plan_detail` as t1
                 left join tbld_route as t2 on t1.route_id=t2.id
                 where t1.dist_emp_id=$sr_id and t1.planned_visit_date='$data'
                 group by t1.route_id";
@@ -331,7 +331,7 @@ where t1.dist_emp_id=' . $psr_id . ' AND t1.planned_visit_date="' . $SystemDate 
     }
 
     function getAllRouteBySr($sr_id) {
-        $sql = "SELECT t2.id,t2.route_name as name FROM `tblt_route_plan_detail` as t1
+        $sql = "SELECT t2.id,t2.route_name as name FROM `tbld_route_plan_detail` as t1
                 inner join tbld_route as t2 on t1.route_id=t2.id
                 where t1.dist_emp_id=$sr_id
                 group by route_id";

@@ -6,11 +6,50 @@ class Logins extends CI_Model
     public function verify_user_pass($user, $pass)
     {
         $this->db->select('id');
-        $this->db->from('tbld_user');
+        $this->db->from('tbld_user');    
         $this->db->where('user_id = "' . $user . '" and user_password = "' . $pass . '"');
         $query = $this->db->get()->result_array();
         return $query;
     }
+    
+     public function getUserIdByUser($user)
+    {
+        $this->db->select('id');
+        $this->db->from('tbld_user');
+        $this->db->where('user_id', $user);
+        $query = $this->db->get()->result_array();
+        return $query;
+    }
+    
+     public function verify_user_status($id)
+    {
+        $this->db->select('user_role_status');
+        $this->db->from('tbli_user_role_mapping');
+        $this->db->where('user_id', $id);
+        $query = $this->db->get()->result_array();
+        return $query;
+    }
+    
+    
+
+    public function getUserRoleByUserId($uid){
+        $this->db->select('user_role_id');
+        $this->db->from('tbli_user_role_mapping');
+        $this->db->where('user_id', $uid);
+        $query = $this->db->get()->result_array();
+        return $query;
+    }
+    
+      public function getUserRoleNameByUserId($uid)
+    {
+        $this->db->select('*');
+        $this->db->from('tbld_user_role');
+        $this->db->where('id', $uid);
+        $query = $this->db->get()->result_array();
+        return $query;
+    }
+    
+    //**//
 
     public function verify_user_pass_by_id($user, $pass)
     {
@@ -21,40 +60,11 @@ class Logins extends CI_Model
         return $query;
     }
 
-    public function verify_user_status($id)
-    {
-        $this->db->select('user_role_status');
-        $this->db->from('tbli_user_role_mapping');
-        $this->db->where('user_id', $id);
-        $query = $this->db->get()->result_array();
-        return $query;
-    }
+   
 
-    public function getUserIdByUser($user)
-    {
-        $this->db->select('id');
-        $this->db->from('tbld_user');
-        $this->db->where('user_id', $user);
-        $query = $this->db->get()->result_array();
-        return $query;
-    }
+   
 
-    public function getUserRoleByUserId($uid){
-        $this->db->select('user_role_id');
-        $this->db->from('tbli_user_role_mapping');
-        $this->db->where('user_id', $uid);
-        $query = $this->db->get()->result_array();
-        return $query;
-    }
-
-    public function getUserRoleNameByUserId($uid)
-    {
-        $this->db->select('*');
-        $this->db->from('tbld_user_role');
-        $this->db->where('id', $uid);
-        $query = $this->db->get()->result_array();
-        return $query;
-    }
+  
     public function getWebServiceName(){
         $this->db->select('config_code');
         $this->db->from('tbld_config');
