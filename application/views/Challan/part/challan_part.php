@@ -97,7 +97,7 @@
                                     <th rowspan="2">
                                         Price [CS]
                                     </th>
-
+                                                                   
                                     <th style="text-align: center;"  colspan="2">
                                         Order Qty
                                     </th>
@@ -107,8 +107,6 @@
                                     <th style="text-align: center;"  colspan="2">
                                         Total Qty
                                     </th>
-
-
                                     <th style="min-width: 140px;" rowspan="2">
                                         Total Price
                                     </th>
@@ -134,8 +132,6 @@
                                         PCS
                                     </th>
 
-
-
                                 </tr>
                             </thead>
                             <tbody id="tbody_cycle">
@@ -149,24 +145,25 @@
                                     ?>
 
 
-                                    <tr >
-                                        <td  >
+                                    <tr>
+                                        <td>
                                             <?php
                                             echo $sl;
                                             $sl++;
                                             ?>
                                         </td>
-                                        <td style="width: 200px;">
+                                        <td style="width: 250px;">
                                             <input type="hidden" value="<?php echo $rp_i['sku_id']; ?>"  name="sku_id[]" id="sku_id<?php echo $sku_count; ?>" />                                            
-                                            <?php echo $rp_i['sku_name']; ?>
+                                            <input type="text" readonly class="form-control"  value="<?php echo $rp_i['sku_name']; ?>"  name="sku_name[]" id="sku_name<?php echo $sku_count; ?>" /> 
+                                           
                                         </td>
                                         <td style="width: 100px;" >
                                             <input type="text" style="text-align: center;" class="form-control" value="<?php echo $rp_i['Pack_Size']; ?>" readonly name="Pack_Size[]" id="Pack_Size<?php echo $sku_count; ?>" />                                            
                                         </td>
-
                                         <td style="text-align: right; width: 100px;">
                                             <input type="text" style="text-align: right;" class="form-control" readonly value=" <?php echo $rp_i['PS_Price']; ?>"  name="TP_price[]" id="TP_price<?php echo $sku_count; ?>" />                                            
-
+                                        
+                                            <input type="text" style="text-align: right;" class="form-control"value="<?php echo $rp_i['stock']; ?>" readonly name="stock[]" id="stock<?php echo $sku_count; ?>" />                                            
                                         </td>
                                         <td style="text-align: right; width: 75px;">
                                             <input type="text" style="text-align: right;" class="form-control"value="<?php echo round($rp_i['totalQty'] / $rp_i['Pack_Size']); ?>" readonly name="order_qty_CS[]" id="order_qty_CS<?php echo $sku_count; ?>" />                                            
@@ -193,8 +190,9 @@
 
 
 
-                                        <td style="text-align: right;">
-                                            <input type="text" style="text-align: right;" class="form-control"value="<?php echo round($rp_i['totalQty'] * $rp_i['PS_Price']); ?>" readonly name="total_amount[]" id="total_amount<?php echo $sku_count; ?>" />                                            
+                                        <td style="text-align: right; width: 75px;">
+                                            <input type="text" style="text-align: right;" class="form-control"value="<?php echo round($rp_i['totalQty'] * $rp_i['PS_Price']); ?>" readonly name="total_amount[]" id="total_amount<?php echo $sku_count; ?>" />
+                                            <input value="<?php echo $rp_i['stock']-$rp_i['totalQty']; ?>" readonly name="stockgap[]" id="stockgap<?php echo $sku_count; ?>" />                                            
                                         </td>
 
 

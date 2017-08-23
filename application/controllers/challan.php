@@ -102,10 +102,11 @@ class Challan extends CI_Controller {
             'grand_total' => $grand_total
         );
      
-       $insert_into_challan_id = $this->Challans->insertData('tblt_challan', $challan);  // insert challan
+       //$insert_into_challan_id = $this->Challans->insertData('tblt_challan', $challan);  // insert challan
         foreach($memo_id As $memo){
-          $Sku_inventory_qty = $this->Challans->MemoUpdate($memo[memo_id],$insert_into_challan_id); // Insert challan id in memmo and memo status change
+        //  $Sku_inventory_qty = $this->Challans->MemoUpdate($memo[memo_id],$insert_into_challan_id); // Insert challan id in memmo and memo status change
         }
+        $insert_into_challan_id=0;
         foreach ($sku_id as $key => $value) {
             $challan_line = array(
                 'challan_id' => $insert_into_challan_id,
@@ -124,8 +125,8 @@ class Challan extends CI_Controller {
             if ($Total_qty[$key] != 0) {
                 $Sku_inventory_qty = $this->Challans->GetinventoryQtybySku_ID($value); //get inventory qty
                 $qty = $Sku_inventory_qty[0]['qty']-$Total_qty[$key];
-                $insert_into_challan_line = $this->Challans->insertData('tblt_challan_line', $challan_line);//update Inventory
-                $inventory_qty_update = $this->Challans->UpdateinventoryQtybyID($value, $qty); //insert challan line
+              //  $insert_into_challan_line = $this->Challans->insertData('tblt_challan_line', $challan_line);//update Inventory
+               // $inventory_qty_update = $this->Challans->UpdateinventoryQtybyID($value, $qty); //insert challan line
             }
         }
          redirect(site_url('Challan/Create_challan'));

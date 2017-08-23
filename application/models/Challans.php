@@ -22,9 +22,10 @@ class Challans extends CI_Model {
     }
     
      public function getOrder_date($db_id,$psr_id,$date) {
-     $sql ='SELECT t1.db_id,t4.id as sku_id,t4.sku_name ,t5.qty As Pack_Size ,t2.outlet_lifting_price as PS_Price, round(t2.outlet_lifting_price*t5.qty) AS Price,IFNULL(A.TotalQty,0) As totalQty FROM `tbli_db_bundle_price_mapping` as t1
+     $sql ='SELECT t1.db_id,t4.id as sku_id,t4.sku_name ,t5.qty As Pack_Size ,t2.outlet_lifting_price as PS_Price,t33.qty as stock, round(t2.outlet_lifting_price*t5.qty) AS Price,IFNULL(A.TotalQty,0) As totalQty FROM `tbli_db_bundle_price_mapping` as t1
             left join tbld_bundle_price_details as t2 on t1.bundle_price_id=t2.bundle_price_id         
             LEft join tbld_sku as t4 on t2.sku_id=t4.id
+            LEft join tblt_inventory as t33 on t33.sku_id=t4.id
             left join(
                       SELECT t11.sku_id,t11.unit_sale_price,sum(t11.quantity_ordered) As TotalQty
                       FROM `tblt_sales_order` as t10
