@@ -92,16 +92,18 @@ $Systemdate = $this->session->userdata('System_date');
                                         <div class="form-group">
                                             <label class="control-label">Order Status</label>
                                             <select class="form-control select2" id="sales_status">
-
-
-                                                <option value="">ALL</option>
+                                                <option selected value="0">All</option>
+                                                <option value="1">New</option>                                                
+                                                <option value="2">Delivery</option>
+                                                <option value="3">Confirmed</option>
+                                                <option value="6">Cancel</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="control-label"></label>
-                                            <button style="margin-top: 25px; margin-left: 25px;" class="btn btn-success" onclick="getData();">Search</button>
+                                            <button style="margin-top: 25px; margin-left: 25px;" class="btn btn-success" onclick="getallData();">Search</button>
                                         </div>
                                     </div>
 
@@ -137,12 +139,12 @@ $this->load->view('footer/footer');
             autoclose: true
 
         });
-        getData();
+        getallData();
     });
 
     function getRouteBySrAndDateRange() {}
 
-    function getData() {
+    function getallData() {
         var date_frm = $('#date_frm').val();
         var date_to = $('#date_to').val();
         var PSR = $('#PSR').val();
@@ -153,7 +155,7 @@ $this->load->view('footer/footer');
         $.ajax({
             type: "POST",
             url: "<?php echo base_url(); ?>order/allorder/",
-            Orderdate {date_frm: date_frm, date_to: date_to, PSR: PSR, Sub_Route: Sub_Route, sales_status: sales_status},
+            data: {date_frm: date_frm, date_to: date_to, PSR: PSR, Sub_Route: Sub_Route, sales_status: sales_status},
             dataType: "html",
             success: function (data) {
                 $("#all_order_info").html(data);

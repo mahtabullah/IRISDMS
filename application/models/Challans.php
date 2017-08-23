@@ -2,6 +2,12 @@
 
 class Challans extends CI_Model {
     
+    
+    public function insertData($tbl, $data) {
+        $this->db->insert($tbl, $data);
+
+        return $this->db->insert_id();
+    }
      public function getDbpSrList($db_id) {
         $sql = "SELECT id,first_name as name FROM `tbld_distribution_employee` where distribution_house_id=$db_id and dist_role_id=2";
         $query = $this->db->query($sql)->result_array();
@@ -37,5 +43,27 @@ class Challans extends CI_Model {
      $result= $this->db->query($sql)->result_array();
      return $result;
     
+}
+public function GetinventoryQtybySku_ID($skuid){
+       $sql ='SELECT id,qty FROM tblt_inventory where sku_id='.$skuid;
+        $result = $this->db->query($sql)->result_array();
+        return $result;
+    }
+     public function UpdateinventoryQtybyID($id,$qty){
+         $sql ='update tblt_inventory set qty='.$qty.' WHERE sku_id='.$id;
+         $result = $this->db->query($sql);
+        return $result;
+    }
+    
+     public function getMemoid($db_id,$psr_id,$date) {
+     $sql ='SELECT id As memo_id FROM `tblt_sales_order` as t10 where Challan_no=0 And so_status=1 And t10.planned_order_date="'.$date.'" and t10.db_id='.$db_id.' and t10.psr_id='.$psr_id;
+     $result= $this->db->query($sql)->result_array();
+     return $result;
+    
+}
+ public function MemoUpdate($id,$challan_id) {
+     $sql ='update tblt_sales_order set Challan_no='.$challan_id.',so_status=2 where Challan_no=0 And so_status=1 And id='.$id;
+     $result= $this->db->query($sql);
+         
 }
 }

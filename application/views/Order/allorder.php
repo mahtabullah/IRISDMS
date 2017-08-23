@@ -85,7 +85,7 @@
                                          <span class="label label-danger">New</span>
                                          <?php
                                      }elseif($status==2){ //Challan Created And Transit ?>
-                                         <span class="label label-warning">New</span>
+                                         <span class="label label-warning">Delivery</span>
                                          <?php
                                      }if($status==3){//Challan Confirm And Delveried ?>
                                          <span class="label label-success">New</span>

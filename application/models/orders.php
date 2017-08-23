@@ -34,7 +34,7 @@ where t1.dist_emp_id=' . $psr_id . ' AND t1.planned_visit_date="' . $SystemDate 
     }
 
     public function getSalesOrderInfo($where) {
-       $sql = "SELECT t2.outlet_name,t3.first_name As PSR,t4.db_channel_element_name As sub_route,t6.Total_qty,t1.* FROM `tblt_sales_order` as t1
+        $sql = "SELECT t2.outlet_name,t3.first_name As PSR,t4.db_channel_element_name As sub_route,t6.Total_qty,t1.* FROM `tblt_sales_order` as t1
                 Inner join ( SELECT so_id,sum(quantity_ordered/Pack_size) as Total_qty FROM `tblt_sales_order_line` group by so_id ) As t6 on t6.so_id=t1.id
                 Inner join tbld_outlet as t2 on t1.outlet_id=t2.id
                 Inner join tbld_distribution_employee AS t3 on t3.id=t1.Psr_id

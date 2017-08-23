@@ -36,8 +36,8 @@ class order extends CI_Controller {
         $date_start = $this->input->post('date_frm');
         $date_end = $this->input->post('date_to');
         $PSR = $this->input->post('PSR');
-        $Sub_Route = $this->input->post('sales_order_type');
-        $sales_status = $this->input->post('sales_order_type');
+        $Sub_Route = $this->input->post('Sub_Route');
+        $sales_status = $this->input->post('sales_status');
         $db_id = $this->session->userdata('db_id');
         $date_frm = date("Y-m-d", strtotime($date_start));
         $date_to = date("Y-m-d", strtotime($date_end));
@@ -47,19 +47,15 @@ class order extends CI_Controller {
             $where .= ' AND planned_order_date BETWEEN "' . $date_frm . '" AND "' . $date_to . '" ';
         }
         if (!empty($PSR)) {
-            $where .= 'AND t1.psr_id=' . $PSR;
+            $where .= ' AND t1.psr_id=' . $PSR;
         }
         if (!empty($Sub_Route)) {
-            $where .= 'AND t1.route_id=' . $Sub_Route;
+            $where .= ' AND t1.route_id=' . $Sub_Route;
         }
         if (!empty($sales_status)) {
-            $where .= 'AND t1.so_status=' . $sales_status;
+            $where .= ' AND t1.so_status=' . $sales_status;
         }
-
-
-
         $data["Order"] = $this->orders->getSalesOrderInfo($where);
-
         $this->load->view('order/allorder', $data);
     }
 
