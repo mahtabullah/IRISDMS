@@ -163,7 +163,7 @@
                                         <td style="text-align: right; width: 100px;">
                                             <input type="text" style="text-align: right;" class="form-control" readonly value=" <?php echo $rp_i['PS_Price']; ?>"  name="TP_price[]" id="TP_price<?php echo $sku_count; ?>" />                                            
                                         
-                                            <input type="text" style="text-align: right;" class="form-control"value="<?php echo $rp_i['stock']; ?>" readonly name="stock[]" id="stock<?php echo $sku_count; ?>" />                                            
+                                            <input type="hidden" value="<?php echo $rp_i['stock']; ?>" readonly name="stock[]" id="stock<?php echo $sku_count; ?>" />                                            
                                         </td>
                                         <td style="text-align: right; width: 75px;">
                                             <input type="text" style="text-align: right;" class="form-control"value="<?php echo round($rp_i['totalQty'] / $rp_i['Pack_Size']); ?>" readonly name="order_qty_CS[]" id="order_qty_CS<?php echo $sku_count; ?>" />                                            
@@ -192,7 +192,7 @@
 
                                         <td style="text-align: right; width: 75px;">
                                             <input type="text" style="text-align: right;" class="form-control"value="<?php echo round($rp_i['totalQty'] * $rp_i['PS_Price']); ?>" readonly name="total_amount[]" id="total_amount<?php echo $sku_count; ?>" />
-                                            <input value="<?php echo $rp_i['stock']-$rp_i['totalQty']; ?>" readonly name="stockgap[]" id="stockgap<?php echo $sku_count; ?>" />                                            
+                                            <input  type="hidden" value="<?php echo $rp_i['stock']-$rp_i['totalQty']; ?>" readonly name="stockgap[]" id="stockgap<?php echo $sku_count; ?>" />                                            
                                         </td>
 
 

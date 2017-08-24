@@ -20,7 +20,7 @@ $this->load->view('left/left', $data);
 
 <!-- Main content -->
 <section class="content">
-
+    <
 
 
     <form role="form" id="add_Challan_form" action="<?php echo site_url('challan/add_challan'); ?>"
@@ -100,9 +100,9 @@ $this->load->view('left/left', $data);
             </div>
 
         </div>
-        </div>
-        
-        <div class="modal fade" id="myModal" role="dialog">
+
+
+        <div class="modal modal-warning fade" id="myModal" role="dialog">
             <div class="modal-dialog">
 
                 <!-- Modal content-->
@@ -112,20 +112,28 @@ $this->load->view('left/left', $data);
                         <h4 class="modal-title">Stock</h4>
                     </div>
                     <div class="modal-body">
-                        <table class="table">
+                        <table class="table table-bordered">
                             <thead>
-                            <tr>
-                                <td>Sku Name</td>
-                                <td>Stock Qty</td>
-                                <td>Order Qty</td>
-                                <td>Stock Gap</td>                                
-                            </tr>
+                                <tr>
+                                    <td style="text-align:center;" rowspan="2">SKU Name</td>
+                                    <td colspan="2">Stock Qty</td>
+                                    <td colspan="2">Order Qty</td>
+                                    <td colspan="2">Stock Short</td>                                
+                                </tr>
+                                <tr>
+                                    <td>CS</td>
+                                    <td>PS</td>
+                                    <td>CS</td>
+                                    <td>PS</td> 
+                                    <td>CS</td>
+                                    <td>PS</td>
+                                </tr>
                             </thead>
                             <tbody id="modal_table">
-                                
+
                             </tbody>
                         </table>
-                        <p id="Model_data"></p>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -294,47 +302,54 @@ $this->load->view('footer/footer');
 
     }
 
-    function check_stock() {
+    function shortage_stock_model() {
+        $('#modal_table').html('');
         $('input[name="stockgap[]"]').each(function () {
             var stock_gap = $(this).val();
             var id = $(this).attr('id');
             var index = id.slice(8);
-
-
+          
+            
             if (stock_gap < 0) {
-                var sku_id = $("#sku_id" + index).val();
+              //  var sku_id = $("#sku_id" + index).val();
                 var sku_name = $("#sku_name" + index).val();
                 var curent_stock = $("#stock" + index).val();
+                var Total_qty = $("#Total_qty" + index).val();
                 var stockgap = $("#stockgap" + index).val();
-               
-                 $('#modal_table').html(sku_name + '-' + sku_id + '-' + curent_stock + '-' + stockgap); 
-                 $('#myModal').modal('show');
+                var Pack_Size = $("#Pack_Size" + index).val();
+                var shortQty = '<tr><td>' + sku_name + '</td><td>' + Math.floor(curent_stock / Pack_Size) + '</td><td>' + (curent_stock % Pack_Size) + '</td><td>' + Math.floor(Total_qty / Pack_Size) + '</td><td>' + Total_qty % Pack_Size + '</td><td>' + Math.abs(Math.floor(stockgap / Pack_Size)) + '</td><td>' + Math.abs(stockgap % Pack_Size) + '</td> </tr>';
+                $('#modal_table').append(shortQty);
 
             }
         });
+      //  $('#ajax_load').css("display", "none");
+       // $('#myModal').modal('show');
+
     }
     $('#add_Challan_form').unbind('submit').bind('submit', function (e) {
-
         e.preventDefault(); // avoid to execute the actual submit of the form.
-        check_stock();
 
+        var stockshort = 0;
+        $('input[name="stockgap[]"]').each(function () {
+            var stock_gap = $(this).val();
+            if (stock_gap < 0) {
+                stockshort = 1;
+            }
+        });
 
-
-        /* $('#ajax_load').css("display", "block");
-         
-         var url = "<?php echo site_url('challan/add_challan'); ?>"; // the script where you handle the form input.
-         
-         $.ajax({
-         type: "POST",
-         url: url,
-         data: $("#add_Challan_form").serialize(), // serializes the form's elements.
-         success: function (data) {
-         $('#challan_part').html('');
-         $('#ajax_load').css("display", "none");
-         
-         
-         }
-         });
-         */
+        if (stockshort == 1) {
+            shortage_stock_model();
+        } else {
+            var url = "<?php echo site_url('challan/add_challan'); ?>"; // the script where you handle the form input.
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#add_Challan_form").serialize(), // serializes the form's elements.
+                success: function (data) {
+                    $('#challan_part').html('');
+                    $('#ajax_load').css("display", "none");
+                }
+            });
+        }
     });
 </script>
