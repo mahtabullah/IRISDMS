@@ -27,10 +27,6 @@ class order extends CI_Controller {
         $this->load->view('order/index', $data);
     }
 
-    function OrderEditById($order_id) {
-        echo $order_id;
-    }
-
     public function allorder() {
 
         $date_start = $this->input->post('date_frm');
@@ -151,10 +147,11 @@ class order extends CI_Controller {
         $new_line .= '<td><input type="text"  name="order_qty_PS[]" id="order_qty_PS' . $count . '" onkeyup="total_qty_cs(id);" class="form-control" readonly /></td>';
         $new_line .= '<td><input type="text"  name="Offer_txt[]" id="Offer_txt' . $count . '" onkeyup="" class="form-control" readonly /></td>';
         $new_line .= '<td><input type="text"  name="Discount[]" id="Discount' . $count . '" onkeyup="" class="form-control" readonly /></td>';
-        $new_line .= '<td><input type="text"  name="Total_qty[]" id="Total_qty' . $count . '" " class="form-control" readonly /></td>';
+        $new_line .= '<td><input type="text"  name="Total_qty[]" id="Total_qty' . $count . '" " class="form-control" readonly />';
+        $new_line .= '<input type="hidden" name="total_amount[]" id="total_amount' . $count . '" class="form-control"  readonly /></td>';
 
-        $new_line .= '</td>';
-        $new_line .= '<td><input type="text" name="total_amount[]" id="total_amount' . $count . '" class="form-control"  readonly /></td>';
+       
+       
         $new_line .= '<td><span class="btn btn-xs btn-danger " id="removeLine"><i class="fa fa-times"></i></span></td>';
         $new_line .= '</tr>';
         echo $new_line;
@@ -270,102 +267,26 @@ class order extends CI_Controller {
         //redirect(site_url('order/index/others'));
     }
 
+   
+    function OrderEditById($order_id) {
+      //  echo $order_id;
+        $data['orderInfo']=$this->orders->getOrderinfobyid($order_id);
+        $data['orderline']=$this->orders->getOrderLInebyid($order_id);
+        $data['orderInfo']=$this->orders->getOrderinfobyid($order_id);
+      //  $data['Next_orderId']=$this->orders->getnextOrderid($order_id);
+  //var_dump($data['Next_orderId']);
+        $this->load->view('order/Edit_byid', $data);
+    }
+    
+    function save_after_edit(){
+                
+    }
+    function Next_order($id){
+       $data['Next_orderId']=$this->orders->getnextOrderid($id);                  
+    }
+
+
     //////////////////////////////////////////////
-
-    /**
-     *
-     * @param int   $db_id
-     * @param array $sku_id
-     * @param array $qty
-     * @param array $free_sku_id
-     * @param array $free_sku_qty
-     *
-     * @return boolean
-     */
-    public function getUnit() {
-        $sku_id = $this->input->post('sku_id');
-        $get_unit = $this->orders->getUnit($sku_id);
-        echo json_encode($get_unit);
-    }
-
-    public function saveOutlet() {
-        $db_id = $this->session->userdata('db_id');
-        $outlet_name = $this->input->post('outlet_name');
-        $outlet_address = $this->input->post('outlet_address');
-        $address = array(
-            'address_name' => $outlet_address
-        );
-        $address_id = $this->orders->insertData('tbld_address', $address);
-        $outlet_info = array(
-            'name' => $outlet_name,
-            'db_id' => $db_id,
-            'address_id' => $address_id,
-        );
-        $outlet_id = $this->orders->insertData('tbld_sales_other_outlet', $outlet_info);
-        $result = '<option value="' . $outlet_id . '">' . $outlet_name . '</option>';
-        echo $result;
-    }
-
-    public function getRoute() {
-        $sr_id = $this->input->post('sr');
-        $type = $this->input->post('type');
-        if ($type == 'regular_from_pc') {
-            $route = $this->orders->getRouteBySr($sr_id);
-        } else {
-            if ($type == 'adhoc') {
-                $route = $this->orders->getAllRouteBySr($sr_id);
-            } else {
-                if ($type == 'ready_sales') {
-                    $route = $this->orders->getAllRouteBySr($sr_id);
-                }
-            }
-        }
-        $option = '<option></option>';
-        foreach ($route as $name) {
-            $option .= '<option value="' . $name['id'] . '">' . $name['name'] . '</option>';
-        }
-        echo $option;
-    }
-
-    public function getDdPrice() {
-        $uom_id = $this->input->post('uom_id');
-        $sku_id = $this->input->post('sku_id');
-        $dd_price = $this->orders->getDdPrice($uom_id, $sku_id);
-        foreach ($dd_price as $key) {
-            echo $key['price'];
-        }
-    }
-
-    public function getDefaultMou() {
-        $sku_id = $this->input->post('sku_id');
-        $mou = $this->orders->getDefaultMou($sku_id);
-
-        if (($mou[0]['qty'] > 1)) {
-            $ctn = $mou[0]['qty'];
-        } else {
-            if ($mou[1]['qty'] > 1) {
-                $ctn = $mou[1]['qty'];
-            } else {
-                $ctn = 0;
-            }
-        }
-
-        if (($mou[0]['qty'] == 1)) {
-            $piece = $mou[0]['qty'];
-        } else {
-            if ($mou[1]['qty'] == 1) {
-                $piece = $mou[1]['qty'];
-            } else {
-                $piece = 0;
-            }
-        }
-        $container_type = $mou[0]['code'];
-        $mou_unit = array(
-            'ctn' => $ctn,
-            'piece' => $piece,
-            'code' => $container_type,
-        );
-        echo json_encode($mou_unit);
-    }
-
+  
+ 
 }

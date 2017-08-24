@@ -32,7 +32,7 @@
     <div class="form-group">
         <label class="col-md-3 control-label" for="outlet">Outlet:</label>
         <div class="col-md-3">     
-            <select class="form-control" data-placeholder="Select..." id="outlet" name="outlet" onchange="gerOrderPart();"required >
+            <select class="form-control" data-placeholder="Select..." id="outlet" name="outlet" onchange="getOrderPart();"required >
             </select>
         </div>
     </div>
@@ -57,8 +57,6 @@
                 data: {psr_id: psr_id},
                 dataType: "html",
                 success: function (data) {
-                   
-                     
                     $("#subroute").empty();
                     $("#subroute").append(data);
                     $("#subroute").select2({
