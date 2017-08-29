@@ -29,7 +29,7 @@ where t1.dist_emp_id=' . $psr_id . ' AND t1.planned_visit_date="' . $SystemDate 
 
     public function getSalesOrderInfo($where) {
         $sql = "SELECT t2.outlet_name,t3.first_name As PSR,t4.db_channel_element_name As sub_route,t6.Total_qty,t1.* FROM `tblt_sales_order` as t1
-                Inner join ( SELECT so_id,sum(quantity_ordered/Pack_size) as Total_qty FROM `tblt_sales_order_line` group by so_id ) As t6 on t6.so_id=t1.id
+                Inner join ( SELECT so_id,sum(quantity_confirmed/Pack_size) as Total_qty FROM `tblt_sales_order_line` group by so_id ) As t6 on t6.so_id=t1.id
                 Inner join tbld_outlet as t2 on t1.outlet_id=t2.id
                 Inner join tbld_distribution_employee AS t3 on t3.id=t1.Psr_id
                 Inner join tbld_distribution_route as t4 on t4.id=t1.route_id
@@ -70,7 +70,24 @@ where t1.dist_emp_id=' . $psr_id . ' AND t1.planned_visit_date="' . $SystemDate 
 
         return $query;
     }
-   
+    
+    public function update_order_table($table,$id,$data){
+        $this->db->where('id', $id);
+        $this->db->update($table, $data);
+    }
+     public function Delete_order_table_line($id){
+        $this->db->where('so_id', $id);      
+        $this -> db -> delete('tblt_sales_order_line');
+    }
+    
+    public function getOrderLInebyid_skid($so_id,$sku_id) {
+        $sql = 'SELECT id FROM `tblt_sales_order_line` WHERE so_id='.$so_id.' and sku_id='.$sku_id;
+        $query = $this->db->query($sql)->result_array();
+
+        return $query;
+    }
+    
+    
 
     //////////////*\\\\\\\\\
 

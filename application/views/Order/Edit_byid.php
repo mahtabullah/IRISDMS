@@ -34,7 +34,7 @@ $this->load->view('left/left', $data);
             <div class="row">
                 <div class="col-md-12">
 
-                    <div class="box box-success">
+                    <div class="box box-solid box-success">
                         <div class="box-header with-border">
                             <h3 class="box-title">Order Inforamtion</h3>
 
@@ -91,7 +91,20 @@ $this->load->view('left/left', $data);
                                                 Order Status
                                             </th>
                                             <th>
-                                                <?php echo $outletinfo["so_status"]; ?>
+                                                <?php
+                                                $status = $outletinfo["so_status"];
+                                                if ($status == 1) {//new Order
+                                                    ?>
+                                                    <span class="label label-danger">New</span>
+                                                <?php } elseif ($status == 2) { //Challan Created And Transit 
+                                                    ?>
+                                                    <span class="label label-warning">Delivery</span>
+                                                <?php }if ($status == 3) {//Challan Confirm And Delveried 
+                                                    ?>
+                                                    <span class="label label-success">New</span>
+                                                    <?php
+                                                }
+                                                ?>
                                                 <input name="so_status" value="<?php echo $outletinfo["so_status"]; ?>" type="hidden">
                                             </th>
                                         </tr>
@@ -109,7 +122,7 @@ $this->load->view('left/left', $data);
             <div class="row">
                 <div class="col-md-12">
 
-                    <div class="box box-success">
+                    <div class="box box-solid box-success">
                         <div class="box-header with-border">
                             <h3 class="box-title">Order</h3>
 
@@ -140,7 +153,7 @@ $this->load->view('left/left', $data);
                                             <th>
                                                 Discount amount
                                             </th>
-                                            
+
                                             <th style="min-width: 140px;">
                                                 Subtotal
                                             </th>
@@ -150,24 +163,31 @@ $this->load->view('left/left', $data);
                                         </tr>
                                     </thead>
                                     <tbody id="tbody_cycle">
-                                        
-                                        <?php $count=0; foreach ($orderline As $orderlineinfo) { ?>
+
+                                        <?php
+                                        $count = 0;
+                                        foreach ($orderline As $orderlineinfo) {
+                                            ?>
                                             <tr>
                                                 <td style="width:300px;"><select name="sku_id[]" onchange="get_unit_price(id)" id="sku_id<?php echo $count; ?>" class="form-control" required >
                                                         <option selected value="<?php echo $orderlineinfo["sku_id"]; ?>"><?php echo $orderlineinfo["sku_name"]; ?></option>
                                                     </select></td>
-                                                    <td style="width:100px;"><input type="text" value="<?php echo $orderlineinfo["Pack_size"]; ?>" name="Pack_Size[]" id="Pack_Size<?php echo $count; ?>" class="form-control"  onkeyup="openQty(id);" readonly required/></td>
-                                                    <td style="width:200px;"><input type="text" value="<?php echo $orderlineinfo["unit_sale_price"]; ?>" name="TP_price[]" id="TP_price<?php echo $count; ?>" class="form-control"  onkeyup="openQty(id);" readonly required/></td>
-                                                <td><input type="text"  name="order_qty_CS[]" value="<?php echo floor($orderlineinfo["quantity_confirmed"]/$orderlineinfo["Pack_size"]); ?>" id="order_qty_CS<?php echo $count; ?>" onkeyup="total_qty_cs(id);" class="form-control" /></td>
-                                                <td><input type="text"  name="order_qty_PS[]" value="<?php echo $orderlineinfo["quantity_confirmed"]%$orderlineinfo["Pack_size"]; ?>" id="order_qty_PS<?php echo $count; ?>" onkeyup="total_qty_cs(id);" class="form-control" /></td>
+                                                <td style="width:100px;"><input type="text" value="<?php echo $orderlineinfo["Pack_size"]; ?>" name="Pack_Size[]" id="Pack_Size<?php echo $count; ?>" class="form-control"  onkeyup="openQty(id);" readonly required/></td>
+                                                <td style="width:200px;"><input type="text" value="<?php echo $orderlineinfo["unit_sale_price"]; ?>" name="TP_price[]" id="TP_price<?php echo $count; ?>" class="form-control"  onkeyup="openQty(id);" readonly required/></td>
+                                                <td><input type="text"  name="order_qty_CS[]" value="<?php echo floor($orderlineinfo["quantity_delivered"] / $orderlineinfo["Pack_size"]); ?>" id="order_qty_CS<?php echo $count; ?>" onkeyup="total_qty_cs(id);" class="form-control" /></td>
+                                                <td><input type="text"  name="order_qty_PS[]" value="<?php echo $orderlineinfo["quantity_delivered"] % $orderlineinfo["Pack_size"]; ?>" id="order_qty_PS<?php echo $count; ?>" onkeyup="total_qty_cs(id);" class="form-control" /></td>
                                                 <td><input type="text"  name="Offer_txt[]"  id="Offer_txt<?php echo $count; ?>" onkeyup="" class="form-control" readonly /></td>
                                                 <td><input type="text"  name="Discount[]" value="<?php echo $orderlineinfo["total_discount_amount"]; ?>" id="Discount<?php echo $count; ?>" onkeyup="" class="form-control" readonly /></td>
-                                                <input type="hidden"  name="Total_qty[]" value="<?php echo $orderlineinfo["quantity_confirmed"]; ?>" id="Total_qty<?php echo $count; ?>" class="form-control" readonly />
-                                               
-                                                <td><input type="text" name="total_amount[]" id="total_amount<?php echo $count; ?>"  value="<?php echo $orderlineinfo["total_billed_amount"]; ?>" class="form-control"  readonly /></td>
-                                                <td></td>
-                                            </tr>
-                                        <?php $count++;} ?>
+                                        <input type="hidden"  name="Total_qty[]" value="<?php echo $orderlineinfo["quantity_delivered"]; ?>" id="Total_qty<?php echo $count; ?>" class="form-control" readonly />
+                                        <input type="hidden"  name="TotalOrder_qty[]" value="<?php echo $orderlineinfo["quantity_delivered"]; ?>" id="TotalOrder_qty<?php echo $count; ?>" class="form-control" readonly />
+
+                                        <td><input type="text" name="total_amount[]" id="total_amount<?php echo $count; ?>"  value="<?php echo $orderlineinfo["total_billed_amount"]; ?>" class="form-control"  readonly /></td>
+                                        <td></td>
+                                        </tr>
+                                        <?php
+                                        $count++;
+                                    }
+                                    ?>
 
                                     </tbody>
                                     <tfoot>
@@ -211,29 +231,29 @@ $this->load->view('left/left', $data);
 
                                             </td>
                                         </tr>
-                                         <tr>
+                                        <tr>
                                             <td> </td>
-                                           
+
                                             <td colspan="6">
 
                                             </td>
                                             <td style="text-align: right;">
-                                               <!-- <a href="<?php echo site_url('order/OrderEditById/'.$Next_orderId); ?>"  class="btn btn-facebook btn-lg">Next</a>-->
+                                               <!-- <a href="<?php echo site_url('order/OrderEditById/' . $Next_orderId); ?>"  class="btn btn-facebook btn-lg">Next</a>-->
                                             </td>
                                             <td>
-                                                
+
                                             </td>
                                         </tr>
                                     </tfoot>
                                 </table>
                             </div>
                             <input type="hidden" class="form-control" id="row_num" name="row_num" value="1">
-                           
+
                         </div>
 
                     </div>
 
-                   
+
                 </div>
             </div>
         </form>
@@ -248,8 +268,8 @@ $this->load->view('footer/footer');
 <script>
     var sku_row_count = <?php echo $count ?>;
     $(document).ready(function () {
-         grand_total_amount();
-         document.getElementById("title").innerHTML ="IRIS | Order Edit "
+        grand_total_amount();
+        document.getElementById("title").innerHTML = "IRIS | Order Edit "
     });
     /*add row*/
     function add_row() {
@@ -259,7 +279,7 @@ $this->load->view('footer/footer');
 
         $.ajax({
             type: "POST",
-            url: "<?php echo base_url(); ?>order/add_row/",
+            url: "<?php echo base_url(); ?>order/Editadd_row/",
             data: {count: count, sku_list: sku_list},
             dataType: "html",
             success: function (data) {
@@ -292,7 +312,7 @@ $this->load->view('footer/footer');
      *-----------------------------------------------------------------------*/
     $("table").on('click', '#removeLine', function () {
         $(this).parent('td').parent('tr').remove();
-         grand_total_amount();
+        grand_total_amount();
     });
     //end
 
@@ -334,7 +354,7 @@ $this->load->view('footer/footer');
         }
     }
     function openQty(index) {
-       var TP_price = $("#TP_price" + index).val();
+        var TP_price = $("#TP_price" + index).val();
         if (TP_price !== '') {
             $("#order_qty_CS" + index).attr('readonly', false);
             $("#order_qty_PS" + index).attr('readonly', false);
@@ -371,21 +391,48 @@ $this->load->view('footer/footer');
 
     }
 
-
-
-
-
     $('#add_order_form').unbind('submit').bind('submit', function (e) {
-
+        var status =<?php echo$status; ?>;
         e.preventDefault(); // avoid to execute the actual submit of the form.
+        if (status == 1) {
+            $('#ajax_load').css("display", "block");
 
+            var url = "<?php echo site_url('order/save_after_edit'); ?>"; // the script where you handle the form input.
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#add_order_form").serialize(), // serializes the form's elements.
+                success: function (data) {
+
+                    $('#ajax_load').css("display", "none");
+                    alert(data);
+                    window.location = window.close();
+                }
+            });
+        } else {
+            // alert("Edit not Possible");
+            $('#ajax_load').css("display", "block");
+
+            var url = "<?php echo site_url('order/save_after_order_confirm'); ?>"; // the script where you handle the form input.
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#add_order_form").serialize(), // serializes the form's elements.
+                success: function (data) {
+
+                    $('#ajax_load').css("display", "none");
+                    alert(data);
+                    window.location = window.close();
+                }
+            });
+
+
+
+
+        }
     });
-    
-    $('#s').unbind('submit').bind('submit', function (e) {
 
-        e.preventDefault(); // avoid to execute the actual submit of the form.
 
-    });
-    
-    
 </script>

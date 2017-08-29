@@ -51,7 +51,19 @@
                             <tr>
                                  <td>
                                      <?php $orderline['id']; ?>
-                                     <a target="_blank" href="<?php echo base_url() ;?>order/OrderEditById/<?php echo $orderline['id']; ?>" class="btn btn-primary btn-xs">Edit</a>
+                                     <?php $status=$orderline['so_status']; 
+                                     if($status==1){//new Order?>
+                                        <a target="_blank" href="<?php echo base_url() ;?>order/OrderEditById/<?php echo $orderline['id']; ?>" class="btn btn-primary btn-xs">Edit</a>
+                                         <?php
+                                     }elseif($status==2){ //Challan Created And Transit ?>
+                                       <a target="_blank" href="<?php echo base_url() ;?>order/OrderEditById/<?php echo $orderline['id']; ?>" class="btn btn-yahoo btn-xs">Update Order</a>
+                                         <?php
+                                     }if($status==3){//Challan Confirm And Delveried ?>
+                                         <a target="_blank" href="<?php echo base_url() ;?>order/OrderEditById/<?php echo $orderline['id']; ?>" class="btn btn-flickr btn-xs">Details</a>
+                                         <?php
+                                     }
+                                     ?>
+                                     
                                     
                                 </td>
                                 <td>
