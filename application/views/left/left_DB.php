@@ -9,10 +9,7 @@
                 <h6 style="color: white; text-align: center;"><b><?php echo $this->session->userdata('dbhouse_name'); ?></b></h6>
                 <h6 style="color: white; text-align: center;"><b><?php echo $this->session->userdata('System_date'); ?></b></h6>
             </li>
-            <li class="header">
-
-
-
+           
             <li class="">
                 <a href="<?php echo base_url(); ?>home/home_page">
                     <i class="fa fa-home"></i>
@@ -25,9 +22,7 @@
                 <ul class="treeview-menu">
 
                     <li><a href="<?php echo base_url(); ?>DB_house/Day_end"><i class="fa fa-paper-plane fa-fw"></i><span>Day End </span></a> </li>
-
                 </ul>
-
             </li>
             <li> <a href="#"><i class="fa fa-paper-plane fa-fw"></i><span> Journey Plan</span><i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
@@ -36,7 +31,6 @@
                     <li><a href="<?php echo base_url(); ?>Outlet/DbOutletIndex"><i class="fa fa-paper-plane fa-fw"></i><span>Outlet Profile </span></a> </li>
                     <li><a href="<?php echo base_url(); ?>Route_plan"><i class="fa fa-paper-plane fa-fw"></i><span>Route Plan </span></a> </li>
                 </ul>
-
             </li>
             <li class="treeview">
                 <a href="#">
@@ -44,11 +38,9 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-
                     <li>
                         <a href="#"><i class="fa fa-circle-o"></i> Order Activity <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
-
                             <li><a href="<?php echo base_url(); ?>order/index"><i class="fa fa-circle-o"></i> All Order</a></li>
                             <li><a href="<?php echo base_url(); ?>order/create"><i class="fa fa-circle-o"></i> Order</a></li>
                             <li><a href="#"><i class="fa fa-circle-o"></i> Challan <i class="fa fa-angle-left pull-right"></i></a>
@@ -65,11 +57,8 @@
                         <ul class="treeview-menu">
 
                             <li><a href="<?php echo base_url(); ?>stock/new_stock"><i class="fa fa-circle-o"></i> Purchase Entry </a></li>
-
                         </ul>
                     </li>
-
-
                 </ul>
             </li>
             <li class="">
@@ -80,7 +69,20 @@
                     </span>
                 </a>
             </li>
-
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-address-book"></i> <span>Report</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a href="#"><i class="fa fa-circle-o"></i> Order Report<i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="<?php echo base_url(); ?>report_realtime/OutletWiseOrder"><i class="fa fa-circle-o"></i> Outlet Wise Order [101]</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </section>
 </aside>

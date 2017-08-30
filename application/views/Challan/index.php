@@ -69,7 +69,7 @@ $Systemdate = $this->session->userdata('System_date');
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="control-label">Challan Status</label>
-                                            <select class="form-control select2" id="Challan_status">
+                                            <select class="form-control select2" id="challan_status">
 
 
                                                 <option value="">ALL</option>
@@ -114,7 +114,7 @@ $this->load->view('footer/footer');
             autoclose: true
 
         });
-        //  getData();
+          getData();
     });
 
     function getRouteBySrAndDateRange() {}
@@ -129,7 +129,7 @@ $this->load->view('footer/footer');
         $('#ajax_load').css("display", "block");
         $.ajax({
             type: "POST",
-            url: "<?php echo base_url(); ?>order/allorder/",
+            url: "<?php echo base_url(); ?>Challan/allChallan/",
             data: {date_frm: date_frm, date_to: date_to, PSR: PSR, Sub_Route: Sub_Route, sales_status: sales_status},
             dataType: "html",
             success: function (data) {

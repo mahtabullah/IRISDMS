@@ -1,5 +1,5 @@
 <?php
-ini_set('memory_limit', '-1');
+
 
 if( !defined('BASEPATH')){
     exit('No direct script access allowed');
@@ -12,7 +12,6 @@ class Outlet extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Outlets');
-        
     }
 
     public function DbOutletIndex()
@@ -20,11 +19,6 @@ class Outlet extends CI_Controller
         $db_ids = $this->getDbIds();
         $data['db'] = $this->Outlets->getDbInfoByDbIds($db_ids);
         $data['outlet']=$this->Outlets->getOutletDbId($db_ids);
-        
-        
-    //    var_dump($data);
-               
-               
         $this->load->view('outlet/Dboutlet_index',$data);
     }
 

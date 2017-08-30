@@ -317,17 +317,17 @@ $this->load->view('footer/footer');
                 var Total_qty = $("#Total_qty" + index).val();
                 var stockgap = $("#stockgap" + index).val();
                 var Pack_Size = $("#Pack_Size" + index).val();
-                var shortQty = '<tr><td>' + sku_name + '</td><td>' + Math.floor(curent_stock / Pack_Size) + '</td><td>' + (curent_stock % Pack_Size) + '</td><td>' + Math.floor(Total_qty / Pack_Size) + '</td><td>' + Total_qty % Pack_Size + '</td><td>' + Math.abs(Math.floor(stockgap / Pack_Size)) + '</td><td>' + Math.abs(stockgap % Pack_Size) + '</td> </tr>';
+                var shortQty = '<tr><td>' + sku_name + '</td><td>' + Math.floor(curent_stock / Pack_Size) + '</td><td>' + (curent_stock % Pack_Size) + '</td><td>' + Math.floor(Total_qty / Pack_Size) + '</td><td>' + Total_qty % Pack_Size + '</td><td>' + Math.floor(Math.abs(stockgap / Pack_Size)) + '</td><td>' + Math.abs(stockgap % Pack_Size) + '</td> </tr>';
                 $('#modal_table').append(shortQty);
 
             }
-        });
-      //  $('#ajax_load').css("display", "none");
-       // $('#myModal').modal('show');
-
+        });    
+       $('#ajax_load').css("display", "none");
+      $('#myModal').modal('show');
     }
     $('#add_Challan_form').unbind('submit').bind('submit', function (e) {
         e.preventDefault(); // avoid to execute the actual submit of the form.
+        $('#ajax_load').css("display", "block");
 
         var stockshort = 0;
         $('input[name="stockgap[]"]').each(function () {
@@ -338,6 +338,7 @@ $this->load->view('footer/footer');
         });
 
         if (stockshort == 1) {
+          
             shortage_stock_model();
         } else {
             var url = "<?php echo site_url('challan/add_challan'); ?>"; // the script where you handle the form input.
@@ -350,6 +351,7 @@ $this->load->view('footer/footer');
                     $('#ajax_load').css("display", "none");
                 }
             });
-        }
+           
+        } 
     });
 </script>

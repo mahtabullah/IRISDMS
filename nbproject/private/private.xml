@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/xampp/htdocs/DMS/application/controllers/order.php</file>
-            <file>file:/D:/xampp/htdocs/DMS/application/views/Order/part/regular.php</file>
-            <file>file:/D:/xampp/htdocs/DMS/application/views/Order/part/order.php</file>
-            <file>file:/D:/xampp/htdocs/DMS/application/views/Order/Edit_byid.php</file>
-            <file>file:/D:/xampp/htdocs/DMS/application/views/footer/footer.php</file>
-            <file>file:/D:/xampp/htdocs/DMS/application/models/orders.php</file>
+            <file>file:/D:/xampp/htdocs/DMS/application/views/Challan/index.php</file>
+            <file>file:/D:/xampp/htdocs/DMS/application/models/Challans.php</file>
+            <file>file:/D:/xampp/htdocs/DMS/application/controllers/challan.php</file>
+            <file>file:/D:/xampp/htdocs/DMS/application/views/Challan/allChallan.php</file>
+            <file>file:/D:/xampp/htdocs/DMS/application/views/Order/index.php</file>
             <file>file:/D:/xampp/htdocs/DMS/application/views/Order/allorder.php</file>
         </group>
     </open-files>

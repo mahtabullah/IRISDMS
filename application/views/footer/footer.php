@@ -55,6 +55,40 @@
         document.getElementById("title").innerHTML ="IRIS | "+ReportName
 
     });
+    
+     function DB_filter() {
+        var url = "<?php echo site_url('report_filter/DB_filter'); ?>"; // the script where you handle the form input.
+        $.ajax({
+            type: "POST",
+            url: url,
+            success: function (data) {
+                $('#DB_filter').html(data);
+
+            }
+        });
+    }
+    function singleDate_filter() {
+        var url = "<?php echo site_url('report_filter/singleDate_filter'); ?>"; // the script where you handle the form input.
+        $.ajax({
+            type: "POST",
+            url: url,
+            success: function (data) {
+                $('#date_filter').html(data);
+
+            }
+        });
+    }
+    function extra_filter() {
+        var url = "<?php echo site_url('report_filter/singleDate_filter'); ?>"; // the script where you handle the form input.
+        $.ajax({
+            type: "POST",
+            url: url,
+            success: function (data) {
+                $('#extra_filter').html(data);
+
+            }
+        });
+    }
 </script>
             
 

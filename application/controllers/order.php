@@ -12,8 +12,6 @@ class order extends CI_Controller {
         $this->load->model('Bundle_prices');
         $this->load->model('Outlets');
         $this->load->model('Route_plans');
-
-
         // $this->method_call = &get_instance();
     }
 

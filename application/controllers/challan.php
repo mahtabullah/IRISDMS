@@ -106,7 +106,7 @@ class Challan extends CI_Controller {
         foreach ($memo_id As $memo) {
             $Sku_inventory_qty = $this->Challans->MemoUpdate($memo[memo_id], $insert_into_challan_id); // Insert challan id in memmo and memo status change
         }
-        $insert_into_challan_id = 0;
+        // $insert_into_challan_id = 0;
         foreach ($sku_id as $key => $value) {
             $challan_line = array(
                 'challan_id' => $insert_into_challan_id,
@@ -131,5 +131,48 @@ class Challan extends CI_Controller {
         }
         redirect(site_url('Challan/Create_challan'));
     }
+
+    public function allChallan() {
+        $date_start = $this->input->post('date_frm');
+        $date_end = $this->input->post('date_to');
+        $PSR = $this->input->post('PSR');
+        $challan_status = $this->input->post('challan_status');
+        $db_id = $this->session->userdata('db_id');
+        $date_frm = date("Y-m-d", strtotime($date_start));
+        $date_to = date("Y-m-d", strtotime($date_end));
+        $where = 'AND t1.db_id=' . $db_id;
+
+        if (!empty($date_frm) && !empty($date_to)) {
+            $where .= ' AND order_date BETWEEN "' . $date_frm . '" AND "' . $date_to . '" ';
+        }
+        if (!empty($PSR)) {
+            $where .= ' AND t1.psr_id=' . $PSR;
+        }
+        if (!empty($Sub_Route)) {
+            $where .= ' AND t1.route_id=' . $Sub_Route;
+        }
+        if (!empty($sales_status)) {
+            $where .= ' AND t1.$challan_status=' . $challan_status;
+        }
+
+        $data["all_challan"] = $this->Challans->get_all_challan($where);
+
+        $this->load->view("Challan/allChallan", $data);
+    }
+    public function Detailsbyid($id) {
+       // echo $id;
+        $db_id = $this->session->userdata('db_id');
+        $data["challanInfo"] = $this->Challans->get_challanbyid($id);
+        $data["challanLineInfo"] = $this->Challans->get_challanLinebyid($id, $db_id) ;
+      //  var_dump($data);
+        $this->load->view("Challan/challan_details", $data);
+        
+        
+    }
+
+
+
+        
+    
 
 }
