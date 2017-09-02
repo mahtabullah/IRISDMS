@@ -56,11 +56,13 @@ $this->load->view('footer/footer');
             url: url,
             success: function (data) {
                 $('#filter_data').html(data);
-                $('table').DataTable({
-                    dom: 'T<"clear">lfrtip',
-                    "bSort": false,
-                    "iDisplayLength": 50
+                $('table').DataTable({                  
+                    "sDom": '<"top">Tfrtip',
+                     "bSort": false,
+                    "iDisplayLength": 50                   
                 });
+              
+               
             }
         });
     }

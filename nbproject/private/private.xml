@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>application/views/report_realtime/OutletWiseOrder/OutletWiseOrder.php</url>
+            <bookmark id="1">
+                <name/>
+                <line>0</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/xampp/htdocs/DMS/application/views/Challan/index.php</file>
-            <file>file:/D:/xampp/htdocs/DMS/application/models/Challans.php</file>
-            <file>file:/D:/xampp/htdocs/DMS/application/controllers/challan.php</file>
+            <file>file:/D:/xampp/htdocs/DMS/application/views/header/header.php</file>
+            <file>file:/D:/xampp/htdocs/DMS/application/views/report_realtime/OutletWiseOrder/OutletWiseOrder_filter.php</file>
+            <file>file:/D:/xampp/htdocs/DMS/application/views/filter_data/filter_business_zone.php</file>
+            <file>file:/D:/xampp/htdocs/DMS/application/views/report_realtime/OutletWiseOrder/OutletWiseOrder.php</file>
+            <file>file:/D:/xampp/htdocs/DMS/application/views/footer/footer.php</file>
             <file>file:/D:/xampp/htdocs/DMS/application/views/Challan/allChallan.php</file>
-            <file>file:/D:/xampp/htdocs/DMS/application/views/Order/index.php</file>
-            <file>file:/D:/xampp/htdocs/DMS/application/views/Order/allorder.php</file>
+            <file>file:/D:/xampp/htdocs/DMS/application/controllers/report_realtime.php</file>
         </group>
     </open-files>
 </project-private>
