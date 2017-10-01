@@ -20,10 +20,7 @@ $this->load->view('left/left', $data);
 
 <!-- Main content -->
 <section class="content">
-    <
-
-
-    <form role="form" id="add_Challan_form" action="<?php echo site_url('challan/add_challan'); ?>"
+       <form role="form" id="add_Challan_form" action="<?php echo site_url('challan/add_challan'); ?>"
           method="post">
         <!-- BEGIN FORM-->
         <div class="row">
@@ -171,7 +168,7 @@ $this->load->view('footer/footer');
         if (psr_id != '') {
             $.ajax({
                 type: "POST",
-                url: "<?php echo base_url(); ?>Challan/getRoutebByPSR/",
+                url: "<?php echo base_url(); ?>challan/getRoutebByPSR/",
                 data: {psr_id: psr_id, Date: Challan_Date},
                 dataType: "html",
                 success: function (data) {

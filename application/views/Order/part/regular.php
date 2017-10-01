@@ -87,6 +87,7 @@
                         placeholder: "Select...",
                         allowClear: true
                     });
+                    getOrderPart();
                 }
             });
         }

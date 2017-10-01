@@ -22,7 +22,7 @@ class order extends CI_Controller {
     public function index() {
         $db_id = $this->session->userdata('db_id');
         $data["PSR"] = $this->orders->getDbpSrList($db_id);
-        $this->load->view('Order/index', $data);
+        $this->load->view('order/index', $data);
     }
 
     public function allorder() {
@@ -50,13 +50,13 @@ class order extends CI_Controller {
             $where .= ' AND t1.so_status=' . $sales_status;
         }
         $data["Order"] = $this->orders->getSalesOrderInfo($where);
-        $this->load->view('Order/allorder', $data);
+        $this->load->view('order/allorder', $data);
     }
 
     public function create() {
 
         $data['outlet_type_name'] = $this->orders->getsalesTypes();
-        $this->load->view('Order/create', $data);
+        $this->load->view('order/create', $data);
     }
 
     public function getInfoSales_order_type() {
@@ -69,19 +69,19 @@ class order extends CI_Controller {
             $data['PSR'] = $this->Route_plans->getDbpSrList($db_id);
             //$data['subroute'] = $this->orders->getAllsubroute($db_id);
 
-            $this->load->view('Order/part/regular.php', $data);
+            $this->load->view('order/part/regular.php', $data);
         } else if ($type == 'regular_from_pc') {
             $data['title'] = 'Regular Sales';
             $data['subroute'] = $this->orders->getAllsubroute($db_id);
 
-            $this->load->view('Order/part/regular.php', $data);
+            $this->load->view('order/part/regular.php', $data);
         }
     }
 
     public function gerOrderPart() {
         $sales_order_type = $this->input->post('type');
         $outlet_id = $this->input->post('outlet_id');
-        $this->load->view('Order/part/order', $data);
+        $this->load->view('order/part/order', $data);
     }
 
     public function getOutlet() {
@@ -145,8 +145,10 @@ class order extends CI_Controller {
         $new_line .= '<td><input type="text"  name="order_qty_PS[]" id="order_qty_PS' . $count . '" onkeyup="total_qty_cs(id);" class="form-control" readonly /></td>';
         $new_line .= '<td><input type="text"  name="Offer_txt[]" id="Offer_txt' . $count . '" onkeyup="" class="form-control" readonly /></td>';
         $new_line .= '<td><input type="text"  name="Discount[]" id="Discount' . $count . '" onkeyup="" class="form-control" readonly /></td>';
-        $new_line .= '<td><input type="text"  name="Total_qty[]" id="Total_qty' . $count . '" " class="form-control" readonly /></td>';
-        $new_line .= '<td><input type="text" name="total_amount[]" id="total_amount' . $count . '" class="form-control"  readonly /></td>';      
+        $new_line .= '<td><input type="text"  name="Total_qty[]" id="Total_qty' . $count . '" " class="form-control" readonly />';
+        $new_line .= '<input type="hidden" name="total_amount[]" id="total_amount' . $count . '" class="form-control"  readonly /></td>';
+
+       
        
         $new_line .= '<td><span class="btn btn-xs btn-danger " id="removeLine"><i class="fa fa-times"></i></span></td>';
         $new_line .= '</tr>';
@@ -304,23 +306,16 @@ class order extends CI_Controller {
 
 
         echo 'Sales Order Added';
-        //redirect(site_url('Order/index/others'));
+        //redirect(site_url('order/index/others'));
     }
 
    
-    function ordereditbyid($order_id) {
+    function OrderEditById($order_id) {
       
         $data['orderInfo']=$this->orders->getOrderinfobyid($order_id);
         $data['orderline']=$this->orders->getOrderLInebyid($order_id);
         $data['orderInfo']=$this->orders->getOrderinfobyid($order_id);   
-        $this->load->view('order/edit_byid', $data);
-    }
-     function orderdetailsbyid($order_id) {
-      
-        $data['orderInfo']=$this->orders->getOrderinfobyid($order_id);
-        $data['orderline']=$this->orders->getOrderLInebyid($order_id);
-        $data['orderInfo']=$this->orders->getOrderinfobyid($order_id);   
-        $this->load->view('order/details_byid', $data);
+        $this->load->view('order/Edit_byid', $data);
     }
     
     function save_after_edit(){

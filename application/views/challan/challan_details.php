@@ -34,7 +34,7 @@ table.table-bordered > tbody > tr > td{
 
 <!-- Main content -->
 <section class="content">
-    <form role="form" id="details_Challan_form" action="<?php echo site_url('challan/add_challan'); ?>"
+    <form role="form" id="details_Challan_form" action="<?php echo site_url('challan/challanconfirmbyid'); ?>"
           method="post">
         <!-- BEGIN FORM-->
         <div class="row">
@@ -47,7 +47,7 @@ table.table-bordered > tbody > tr > td{
                     </div>
                     <div class="portlet-body">
                         <div class="table-scrollable">
-                            <table class="table table-striped table-bordered" >
+                            <table class="table" >
 
                                 <?php foreach ($challanInfo As $challan) { ?>
                                     <tr>
@@ -56,8 +56,8 @@ table.table-bordered > tbody > tr > td{
                                         </th>
                                         <th>
                                             <?php echo $challan["PSR"]; ?>
-                                            <input name="outlet_id" value="<?php echo $challan["psr_id"]; ?>" type="text">
-                                            <input name="order_id" value="<?php echo $challan["id"]; ?>" type="text">
+                                            <input type="hidden" name="outlet_id" value="<?php echo $challan["psr_id"]; ?>" type="text">
+                                            <input type="hidden" name="challan_id" value="<?php echo $challan["id"]; ?>" type="text">
                                         </th>                                           
                                     </tr>
                                     <tr>
@@ -66,7 +66,7 @@ table.table-bordered > tbody > tr > td{
                                         </th>
                                         <th>
                                             <?php echo $challan["sub_route"]; ?>
-                                            <input name="route_id" value="<?php echo $challan["route_id"]; ?>" type="text">
+                                            <input type="hidden" name="route_id" value="<?php echo $challan["route_id"]; ?>" type="text">
                                         </th>
                                     </tr>
                                     <tr>
@@ -106,7 +106,7 @@ table.table-bordered > tbody > tr > td{
                                                 <?php
                                             }
                                             ?>
-                                            <input name="so_status" value="<?php echo $challan["challan_status"]; ?>" type="text">
+                                            <input type="hidden" name="so_status" value="<?php echo $challan["challan_status"]; ?>" type="text">
                                         </th>
                                     </tr>
 
@@ -134,8 +134,8 @@ table.table-bordered > tbody > tr > td{
                             <div class="col-md-12" >
 
                                 <div class="table-scrollable" style="padding:10px;">
-                                    <br>
-                                    <table  class="table  table-striped table-bordered " id="sales_order">
+                                    
+                                    <table  class="table  table-striped table-bordered " id="challan">
                                         <thead> 
                                             <tr >
                                                 <th  rowspan="2">
@@ -221,7 +221,7 @@ table.table-bordered > tbody > tr > td{
                                                     </td>
                                                     <td style="text-align: right; width: 75px;">
                                                         <input type="text" class="form-control" style="text-align: right;" value="<?php echo round($challanLine['Challan_qty'] * $challanLine['price'],2); ?>" readonly name="Challan_price[]" id="Challan_price<?php echo $sku_count; ?>" />
-                                                        <input type="hidden" style="text-align: right;" class="form-control"value="<?php echo $challanLine['Challan_qty'] - $challanLine['Totaldelivered']; ?>" readonly name="Short_sku[]" id="Short_sku<?php echo $sku_count; ?>" />
+                                                        <input type="hidden" style="text-align: right;" class="form-control"value="<?php echo $challanLine['Challan_qty'] - $challanLine['Totaldelivered']; ?>" readonly name="Short_sku_qty[]" id="Short_sku_qty<?php echo $sku_count; ?>" />
                                                     </td>
                                                     <td style="text-align: right; width: 75px;">
                                                         <input type="text" style="text-align: right;" class="form-control"value="<?php echo round($challanLine['Totaldelivered'] * $challanLine['price'],2); ?>" readonly name="Totaldelivered_amount[]" id="Totaldelivered_amount<?php echo $sku_count; ?>" />
@@ -244,19 +244,21 @@ table.table-bordered > tbody > tr > td{
                                                 </td>
                                                 <td colspan="3" style="text-align: right;">Gross Total</td>
                                                 <td  colspan="2">
-                                                
-                                                     <?php echo number_format($Total_Qty, 2); ?>
+                                                 <input type="text" class="form-control" style="text-align: right;" value="<?php echo number_format($Total_Qty, 2); ?>" readonly name="" id="" />                                            
+                                                     
                                                 </td>
                                                   <td colspan="2">
-                                                  
-                                                   <?php echo number_format($TotalDelivery_Qty, 2); ?>
+                                                  <input type="text" class="form-control" style="text-align: right;" value="<?php echo $TotalDelivery_Qty;?>" readonly name="grand_total_CS" id="grand_total" />                                            
+                                         
                                                 </td>
                                                 <td >
-                                                     <?php echo number_format($Total_value, 2); ?>
+                                                    <input type="text" class="form-control" style="text-align: right;" value="<?php echo number_format($Total_value, 2); ?>" readonly name="" id="" />                                            
+                                                  
                                                  
                                                 </td>
                                                 <td >
-                                                    <?php echo number_format($TotalDelivery_value, 2); ?>
+                                                    <input type="text" class="form-control" style="text-align: right;" value="<?php echo $TotalDelivery_value; ?>" readonly name="grand_total" id="total_amount" />                                            
+                                                    
                                                   
                                                 </td>
 
@@ -269,7 +271,21 @@ table.table-bordered > tbody > tr > td{
                                                 <td>
                                                 </td>
                                                 <td colspan="2">
-                                                    <button id="submit" type="submit" class="btn btn-lg btn-facebook">Confirm Delivery</button>
+                                                    <?php
+                                            $status = $challan["challan_status"];
+                                            if ($status == 1) {//new Order
+                                                ?>
+                                                 <button id="submit" type="submit" class="btn btn-lg btn-facebook">Confirm Delivery</button>
+                                            <?php } elseif ($status == 2) { //Challan Created And Transit 
+                                                ?>
+                                                
+                                            <?php }if ($status == 3) {//Challan Confirm And Delveried 
+                                                ?>
+                                                <span class="label label-success">Cancle</span>
+                                                <?php
+                                            }
+                                            ?>
+                                                   
                                                 </td>
                                                 
 
@@ -327,6 +343,8 @@ table.table-bordered > tbody > tr > td{
 
                     </div>
                     <div class="modal-footer">
+                        
+                        
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -380,7 +398,7 @@ $this->load->view('footer/footer');
       $('#myModal').modal('show');
     }
      $('#details_Challan_form').unbind('submit').bind('submit', function (e) {
-        e.preventDefault(); // avoid to execute the actual submit of the form.
+       // e.preventDefault(); // avoid to execute the actual submit of the form.
       $('#ajax_load').css("display", "block");
 
         var Short = 0;
@@ -395,8 +413,10 @@ $this->load->view('footer/footer');
          
            shortage_stock_model();
         } else {
-           alert("ok");
+           
             $('#ajax_load').css("display", "none");
+            
+            alert("ok");
            
         } 
     });

@@ -1,11 +1,21 @@
 <?php
 
-class Challans extends CI_Model {
+class challan_m extends CI_Model {
 
+    function __construct()
+    {
+         parent::__construct();
+    }
     public function insertData($tbl, $data) {
         $this->db->insert($tbl, $data);
 
         return $this->db->insert_id();
+    }
+    
+    public function updateData($tbl, $wheredata,$data) {
+        $this->db->where($wheredata);
+        $this->db->update($tbl,$data);
+        
     }
 
     public function getDbpSrList($db_id) {
@@ -93,7 +103,7 @@ class Challans extends CI_Model {
                       where Challan_no=' . $id . '
                       GROUP by t11.sku_id) as A on A.sku_id=t2.sku_id
                 left join(
-                SELECT t22.* FROM tblt_challan_line as t22 where t22.challan_id=1) as B on B.sku_id=t2.sku_id			  
+                SELECT t22.* FROM tblt_challan_line as t22 where t22.challan_id=' . $id . ') as B on B.sku_id=t2.sku_id			  
                 WHERE t1.db_id=' . $db_id;
         $result = $this->db->query($sql)->result_array();
         return $result;

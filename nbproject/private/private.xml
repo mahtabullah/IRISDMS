@@ -12,14 +12,12 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/xampp/htdocs/DMS/application/views/Challan/index.php</file>
-            <file>file:/D:/xampp/htdocs/DMS/application/views/header/header.php</file>
-            <file>file:/D:/xampp/htdocs/DMS/application/views/report_realtime/OutletWiseOrder/OutletWiseOrder_filter.php</file>
-            <file>file:/D:/xampp/htdocs/DMS/application/views/filter_data/filter_business_zone.php</file>
-            <file>file:/D:/xampp/htdocs/DMS/application/views/report_realtime/OutletWiseOrder/OutletWiseOrder.php</file>
-            <file>file:/D:/xampp/htdocs/DMS/application/views/footer/footer.php</file>
-            <file>file:/D:/xampp/htdocs/DMS/application/views/Challan/allChallan.php</file>
-            <file>file:/D:/xampp/htdocs/DMS/application/controllers/report_realtime.php</file>
+            <file>file:/D:/xampp/htdocs/DMS/application/views/Order/part/regular.php</file>
+            <file>file:/D:/xampp/htdocs/DMS/application/models/challan_m.php</file>
+            <file>file:/D:/xampp/htdocs/DMS/application/views/Order/part/order.php</file>
+            <file>file:/D:/xampp/htdocs/DMS/application/controllers/challan.php</file>
+            <file>file:/D:/xampp/htdocs/DMS/application/views/Order/allorder.php</file>
+            <file>file:/D:/xampp/htdocs/DMS/application/views/challan/challan_details.php</file>
         </group>
     </open-files>
 </project-private>

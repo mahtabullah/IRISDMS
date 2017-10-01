@@ -46,8 +46,8 @@
                             <li><a href="#"><i class="fa fa-circle-o"></i> Challan <i class="fa fa-angle-left pull-right"></i></a>
 
                                 <ul class="treeview-menu">
-                                    <li><a href="<?php echo base_url(); ?>Challan/index"><i class="fa fa-circle-o"></i> Challan</a></li>
-                                    <li><a href="<?php echo base_url(); ?>Challan/Create_challan"><i class="fa fa-circle-o"></i> Create Challan</a></li>
+                                    <li><a href="<?php echo base_url(); ?>challan/index"><i class="fa fa-circle-o"></i> Challan</a></li>
+                                    <li><a href="<?php echo base_url(); ?>challan/create_challan"><i class="fa fa-circle-o"></i> Create Challan</a></li>
                                 </ul>
                             </li>
                         </ul>

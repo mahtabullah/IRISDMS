@@ -9,19 +9,19 @@ class challan extends CI_Controller {
         parent::__construct();
         $this->load->model('orders');
         $this->load->model('stocks');
-        $this->load->model('challan_m');
+        $this->load->model('challans');
     }
 
     function index() {
         $db_id = $this->session->userdata('db_id');
-        $data["PSR"] = $this->challan_m->getDbpSrList($db_id);
-        $this->load->view("challan/index", $data);
+        $data["PSR"] = $this->challans->getDbpSrList($db_id);
+        $this->load->view("Challan/index", $data);
     }
 
-    function create_challan() {
+    function Create_challan() {
         $db_id = $this->session->userdata('db_id');
-        $data["PSR"] = $this->challan_m->getDbpSrList($db_id);
-        $this->load->view("challan/create_challan", $data);
+        $data["PSR"] = $this->challans->getDbpSrList($db_id);
+        $this->load->view("Challan/Create_challan", $data);
     }
 
     public function getRoutebByPSR() {
@@ -42,7 +42,7 @@ class challan extends CI_Controller {
         $db_id = $this->session->userdata('db_id');
         $psr_id = $this->input->post('PSR_id');
         $order_date = date("Y-m-d", strtotime($this->input->post('Orderdate')));
-        $No_of_memo = $this->challan_m->getNumberOfMemobyOrder_date($db_id, $psr_id, $order_date);
+        $No_of_memo = $this->challans->getNumberOfMemobyOrder_date($db_id, $psr_id, $order_date);
         echo $No_of_memo[0][No_of_memo];
     }
 
@@ -50,14 +50,13 @@ class challan extends CI_Controller {
         $db_id = $this->session->userdata('db_id');
         $psr_id = $this->input->post('PSR_id');
         $order_date = date("Y-m-d", strtotime($this->input->post('Orderdate')));
-        $data['Order_data'] = $this->challan_m->getOrder_date($db_id, $psr_id, $order_date);
-        $data['No_of_memo'] = $this->challan_m->getNumberOfMemobyOrder_date($db_id, $psr_id, $order_date);
-        $data['getPsrid'] = $this->challan_m->getNumberOfMemobyOrder_date($db_id, $psr_id, $order_date);
-        $data["PSR"] = $this->challan_m->getPsrid($psr_id);
+        $data['Order_data'] = $this->challans->getOrder_date($db_id, $psr_id, $order_date);
+        $data['No_of_memo'] = $this->challans->getNumberOfMemobyOrder_date($db_id, $psr_id, $order_date);
+        $data['getPsrid'] = $this->challans->getNumberOfMemobyOrder_date($db_id, $psr_id, $order_date);
+        $data["PSR"] = $this->challans->getPsrid($psr_id);
         $data["Date"] = $this->input->post('Orderdate');
         $data["subroute"] = $this->orders->getRoutebByPSR($psr_id, $order_date);
-
-        $this->load->view("challan/part/challan_part", $data);
+        $this->load->view("Challan/part/challan_part", $data);
     }
 
     public function add_challan() {
@@ -83,7 +82,7 @@ class challan extends CI_Controller {
         $Grand_total_qty_CS = $this->input->post('Grand_total_qty_CS'); //convert PS to CS
         $Total_qty = $this->input->post('Total_qty'); //order+Extra=Total_qty
 
-        $memo_id = $this->challan_m->getMemoid($db_id, $psr_id, $Order_challan_Date); //Get MEMO Id
+        $memo_id = $this->challans->getMemoid($db_id, $psr_id, $Order_challan_Date); //Get MEMO Id
 
 
 
@@ -103,9 +102,9 @@ class challan extends CI_Controller {
             'grand_total' => $grand_total
         );
 
-        $insert_into_challan_id = $this->challan_m->insertData('tblt_challan', $challan);  // insert challan
+        $insert_into_challan_id = $this->challans->insertData('tblt_challan', $challan);  // insert challan
         foreach ($memo_id As $memo) {
-            $Sku_inventory_qty = $this->challan_m->MemoUpdate($memo[memo_id], $insert_into_challan_id); // Insert challan id in memmo and memo status change
+            $Sku_inventory_qty = $this->challans->MemoUpdate($memo[memo_id], $insert_into_challan_id); // Insert challan id in memmo and memo status change
         }
         // $insert_into_challan_id = 0;
         foreach ($sku_id as $key => $value) {
@@ -124,13 +123,13 @@ class challan extends CI_Controller {
             );
 
             if ($Total_qty[$key] != 0) {
-                $Sku_inventory_qty = $this->challan_m->GetinventoryQtybySku_ID($value); //get inventory qty
+                $Sku_inventory_qty = $this->challans->GetinventoryQtybySku_ID($value); //get inventory qty
                 $qty = $Sku_inventory_qty[0]['qty'] - $Total_qty[$key];
-                $insert_into_challan_line = $this->challan_m->insertData('tblt_challan_line', $challan_line); //update Inventory
-                $inventory_qty_update = $this->challan_m->UpdateinventoryQtybyID($value, $qty); //insert challan line
+                $insert_into_challan_line = $this->challans->insertData('tblt_challan_line', $challan_line); //update Inventory
+                $inventory_qty_update = $this->challans->UpdateinventoryQtybyID($value, $qty); //insert challan line
             }
         }
-        redirect(site_url('challan/Create_challan'));
+        redirect(site_url('Challan/Create_challan'));
     }
 
     public function allChallan() {
@@ -156,79 +155,24 @@ class challan extends CI_Controller {
             $where .= ' AND t1.$challan_status=' . $challan_status;
         }
 
-        $data["all_challan"] = $this->challan_m->get_all_challan($where);
+        $data["all_challan"] = $this->challans->get_all_challan($where);
 
-        $this->load->view("challan/allChallan", $data);
+        $this->load->view("Challan/allChallan", $data);
     }
-
-    public function detailsbyid($id) {
-        // echo $id;
+    public function Detailsbyid($id) {
+       // echo $id;
         $db_id = $this->session->userdata('db_id');
-        $data["challanInfo"] = $this->challan_m->get_challanbyid($id);
-        $data["challanLineInfo"] = $this->challan_m->get_challanLinebyid($id, $db_id);
-        $this->load->view("challan/challan_details", $data);
-    }
-
-    public function challanconfirmbyid() {
-
-        $db_id = $this->session->userdata('db_id');
-
-        $challan_id = $this->input->post('challan_id');
-
-        $grand_total_CS = $this->input->post('grand_total_CS');
-
-        $grand_total = $this->input->post('grand_total');
-
-        $challan_status = 2;
-
-        ///////////////////Challan Line\\\\\\\\\\\\\\\\\\\\\
-
-        $sku_id = $this->input->post('sku_id');
+        $data["challanInfo"] = $this->challans->get_challanbyid($id);
+        $data["challanLineInfo"] = $this->challans->get_challanLinebyid($id, $db_id) ;
+      //  var_dump($data);
+        $this->load->view("Challan/challan_details", $data);
         
-        $Short_sku_qty= $this->input->post('Short_sku_qty');
-
-        $Totaldelivered_qty = $this->input->post('Totaldelivered_qty');
-        $Totaldelivered_amount = $this->input->post('Totaldelivered_amount');
-
-
-        $Grand_total_qty_CS = $this->input->post('Grand_total_qty_CS');
-        $Total_qty = $this->input->post('Total_qty');
-        $System_date = $this->session->userdata('System_date');
-
-        $update_challan = array(
-            'delivery_date' => $System_date,
-            'challan_status' => $challan_status,
-            'delivery_grand_total_CS' => $grand_total_CS,
-            'delivery_grand_total' => $grand_total
-        );
-        $wheredata = array('id' => $challan_id);
-
-
-        $this->challan_m->updateData('tblt_challan', $wheredata, $update_challan);
-
-
-
-
-        foreach ($sku_id as $key => $value) {
-            $challan_line = array(
-                'Confirm_qty' => $Totaldelivered_qty[$key],
-                'Confirm_qty_price' => $Totaldelivered_amount[$key]
-            );
-
-            $wherechallan_line = array('challan_id' => $challan_id, 'sku_id' => $value);
-            $this->challan_m->updateData('tblt_challan_line', $wherechallan_line, $challan_line);
-            
-            $Sku_inventory_qty = $this->challan_m->GetinventoryQtybySku_ID($value); //get inventory qty
-            $qty = $Sku_inventory_qty[0]['qty']+ $Short_sku_qty[$key];
-               
-            $inventory_qty_update = $this->challan_m->UpdateinventoryQtybyID($value, $qty);
-            
-            
-        }
-        $whereorder_line = array('Challan_no' => $challan_id);
-        $order_status = array('so_status' => 3, 'delivery_date' => $System_date);
-
-        $this->challan_m->updateData('tblt_sales_order', $whereorder_line, $order_status);
+        
     }
+
+
+
+        
+    
 
 }

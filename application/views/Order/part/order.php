@@ -273,10 +273,10 @@
                  // show response from the php script.
 
                 $('#ajax_load').css("display", "none");
-                getOutlet();
-                getOrderPart();
-               $("#outlet").select2('val', '');
-              $("#outlet").change();
+               getOutlet();
+               
+              //$("#outlet").select2('val', '');
+             // $("#outlet").change();
             }
         });
     });

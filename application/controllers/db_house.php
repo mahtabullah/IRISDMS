@@ -9,7 +9,7 @@ class DB_house extends CI_Controller {
         parent::__construct();
         $this->load->model('Outlets');
         $this->load->model('db_houses');
-        $this->load->model('Configs');
+       // $this->load->model('Configs');
         $this->load->model('Bundle_prices');
         $this->load->helper('tree_data_functions_helper');
     }

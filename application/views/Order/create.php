@@ -79,7 +79,7 @@ $this->load->view('footer/footer');
             success: function (data) {
                 $("#outlet_part").html(data);
                 $("#order_part").html('');
-                getOrderPart();
+               // getOrderPart();
                 
             }
         });

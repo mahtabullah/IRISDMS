@@ -77,7 +77,7 @@
                                      ?>
                             </td>
                             <td>
-                                 <a target="_blank" href="<?php echo base_url() ;?>challan/Detailsbyid/<?php echo $challan['id']; ?>" class="btn btn-success btn-xs">Details</a>
+                                 <a target="_blank" href="<?php echo base_url() ;?>challan/detailsbyid/<?php echo $challan['id']; ?>" class="btn btn-success btn-xs">Details</a>
                             </td>
                         </tr>
                         <?php } ?>
